@@ -1,0 +1,70 @@
+MITTERALTERICHE FEHDE / MITTE FEHDE
+Update 2 • offline playtest
+
+START / WIN
+Four houses, each with 100 gold, 20 reserve troops, no land, zero checks. All start at Muster without an opening corner reward. Roll for initiative, reroll highest ties; then clockwise player order. Own 16 lots or be the last surviving house to win. There are 54 ownable lots in 12 divisions and four corner spaces.
+
+TURN
+Roll two dice and move clockwise. At a route branch choose the outer road or the six-lot inner division. You may deposit troops on owned lots you pass. Resolve your destination: buy unowned land, automatically take an undefended rival lot, or attack/pass on defended rival land. Then reinforce and build on your owned destination. Buy/resolve cards one at a time, or end your turn. Collect income ONCE at your own turn's end.
+Original movement doubles allow one extra roll for 20 G, after resolving the destination and before cards. No chained extra rolls. Card movement reopens destination/deposit/build and then returns to cards, without extra EoT income.
+
+PRICES / INCOME PER BUILDING PER OWN TURN
+Division size           2 lots     3 lots     4 lots     6 lots
+Buy one lot              20 G       30 G       40 G       60 G
+Market cost              15 G       30 G       60 G      120 G
+Market output             5 G       10 G       20 G       40 G
+Barracks cost            20 G       40 G       60 G      100 G
+Barracks output           2 T        3 T        4 T        6 T
+
+Base income: +20 G and +2 reserve T each own EoT.
+Every owned bare lot: +1 reserve T, NEVER doubled.
+Full division: double BUILDING output only. No base/card/bare-lot multiplier.
+One building per lot; one building purchase per destination step. New buildings pay this turn. Captured buildings remain, but may be demolished without refund; a replacement can then be built. Deposited troops cannot be retrieved.
+Two-lot prices are retained for reference/future maps; this map uses 3-, 4- and 6-lot divisions.
+
+COMMITTED COMBAT
+When attacking, first choose exactly how many reserve troops to commit. They leave reserve and form a separate attacking force. No reinforcements or second commitment during that encounter.
+Both sides MUST roll one die per troop in their force, capped at three dice: 1 troop = 1 die; 2 = 2 dice; 3 or more = 3 dice. Defender uses the lot's stationed troops. Nobody chooses fewer dice.
+Sort each side highest first. Compare all corresponding pairs (up to three); ignore unmatched dice. Lower die loses one troop; ties favor the defender. There is NO +1 defender modifier, even for complete divisions.
+Casualties come only from the committed attackers or stationed defenders. Spare reserves never join automatically. Roll the next round or retreat between rounds. A defeated attacking force ends the encounter even if reserves remain.
+Retreat returns surviving attackers to reserve and closes the attack opportunity for that destination. Victory transfers the lot and stations ALL surviving committed attackers. You may then reinforce in the normal management step. Undefended capture remains free/automatic without compulsory deposit.
+Supporting rulings for this version: any number from 1 to the full reserve may be committed; there is no forced one-troop reserve. Survivor return/occupation rules above complete the committed-force system.
+
+CARDS — YOUR 28-CARD DECK
+20 G per purchase; unlimited purchases while affordable. Each effect resolves immediately, then the card is in the discard pile. Shuffle discards when exhausted. Exactly one copy of each item below.
+
+SURPLUS (9)
+Gain 20 G; gain 30 G; gain 40 G.
+Gain 3 T; gain 5 T; gain 7 T.
+Gain 15 G AND 2 T; gain 30 G AND 4 T; gain 40 G AND 6 T.
+
+FAMINE (9)
+Lose 20 G; lose 30 G; lose 40 G.
+Lose 3 T; lose 5 T; lose 7 T.
+Lose 15 G AND 2 T; lose 30 G AND 4 T; lose 40 G AND 6 T.
+
+MARCH (10)
+Forward 2, 3, 4, 5 or 6 spaces.
+Backward 2, 3, 4, 5 or 6 spaces.
+Resolve the destination normally in either direction. Forward follows clockwise links. Backward follows the reversed links; a route choice is offered at the opposite end of a six-lot division. It does not retrace a stored movement history. Corner effects apply on landing in either direction.
+
+CHECKS / REQUIRED PAYMENT
+If a required cost is fully affordable in BOTH gold and reserve troops, it must be paid. If either part is unaffordable, take one check and lose NONE of those resources. No partial payments and no choosing a check to avoid an affordable payment. Card purchase price is already paid and is not refunded when its effect causes a check.
+Checks do not reset. On the third, eliminate the house and remove ownership, stationed troops and buildings; former lots become unowned. Optional unaffordable purchases are unavailable and do not cause checks.
+
+SIX-LOT DIVISIONS
+Northwatch Pass, Sunroad, Seaward Way and Shadowfen Trail are fully ownable divisions. Each contains six separately purchasable lots. Normal garrison, capture, market, barracks, bare-lot and complete-division income rules apply. Prices/output are in the table above. A complete six-lot division grants NO combat modifier. Full names appear when you click the numbered mini-lots. Layout changed to compact six-lot panels for readable garrisons and building markers; their road connections remain.
+
+CORNERS
+Muster: +10 reserve troops. Levy: pay 10 reserve troops.
+Treasury: +100 gold. Tax: pay 100 gold.
+Landing only; not passing or initial setup. Unaffordable costs use the check rule.
+
+PRESENTATION / SAVES
+M = market; B = barracks; T = stationed troops; star = full division.
+Pawn/holding colors match the house panels. Central animations use the acting house's color; battles use both houses. Actual rolled dice are displayed after the brief rolling animation. The display dice animation uses no gameplay random numbers.
+Menu and Rules pause computer turns and animation timers. Manual Save/Load plus automatic saving after every action. Version 2 starts a new campaign; version 1 saves are incompatible.
+
+PROVENANCE / REMAINING PLAYTEST RULINGS
+Latest direct user notes define the exact cards, fixed attacking force, mandatory up-to-three dice for both sides, six-lot divisions, name and no defense bonus. Six-lot values follow the proposed 60-G lot / 120-G market paying 40 / 100-G barracks paying 6 table. Earlier recovered rules define the economy, bare-lot exception, atomic checks, 16-lot victory and base turn loop.
+Still provisional: corner landing timing, route entry/exit positions, backward branch convention, one building per lot/destination, no troop retrieval, doubles timing/limit, persistent checks, last-survivor victory and the supporting commitment/survivor rulings. There are no placeholder cards now. AI, animations and illustration are PC adaptations.
