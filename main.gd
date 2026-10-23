@@ -230,6 +230,11 @@ func build_actions() -> void:
 		"march_deposit":
 			hint.text = "Passing your land: you may leave troops here. %d steps remain." % game.s.remaining
 			deposit_controls()
+			if t.building == "" and not game.s.built:
+				for kind in ["market", "barracks"]:
+					var cost = game.building_cost(kind, t.division)
+					action_button("Build %s — %d G" % [kind, cost], func(): game.build(kind), p.gold < cost)
+			elif t.building != "": label("Building: " + t.building.capitalize(), actions, 14)
 			action_button("Continue march", game.continue_march)
 		"lot":
 			hint.text = "Destination: " + t.name

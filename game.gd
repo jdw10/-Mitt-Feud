@@ -283,7 +283,7 @@ func deposit(amount: int) -> bool:
 	return true
 
 func build(kind: String) -> bool:
-	if s.phase != "manage" or s.built or tile().owner != s.turn or tile().building != "" or not kind in ["market", "barracks"]: return false
+	if s.phase not in ["manage", "march_deposit"] or s.built or tile().owner != s.turn or tile().building != "" or not kind in ["market", "barracks"]: return false
 	var cost = building_cost(kind, tile().division)
 	if player().gold < cost: return false
 	player().gold -= cost
