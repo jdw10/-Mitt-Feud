@@ -9,7 +9,10 @@ var font = ThemeDB.fallback_font
 var title_font = SystemFont.new()
 var event: Dictionary = {}
 var animation_left = 0.0
+var animation_position = Vector2(995, 170)
 var animation_duration = 1.0
+
+var board_art = preload("res://art/MitteFehde-board-unlabelled.png")
 
 func animate(data: Dictionary, duration: float) -> void:
 	event = data.duplicate(true)
@@ -48,7 +51,13 @@ func text_at(pos: Vector2, value: String, font_size: int, color: Color, width: f
 func _draw() -> void:
 	if game == null or game.s.is_empty(): return
 	layout_board()
-	draw_style_box(panel(Color("101e23"), Color("3b4948"), 1), Rect2(0, 0, 867, 744))
+	#draw_style_box(panel(Color("101e23"), Color("3b4948"), 1), Rect2(0, 0, 867, 744))
+	#adding in the board png
+	draw_texture_rect(
+		board_art,
+		Rect2(0, 0, 870, 744),
+		false
+	)
 	for tr in range(4):
 		var previous = boxes[[31, 6, 14, 23][tr]].get_center()
 		for j in range(6):
@@ -60,8 +69,16 @@ func _draw() -> void:
 		var t = game.s.tiles[i]
 		var r = boxes[i]
 		var owner: int = t.owner
-		var fill = Color("1d2b30") if t.division >= 0 else Color("28302c")
-		if owner >= 0: fill = COLORS[owner].darkened(0.76)
+		
+		#var fill = Color("1d2b30") if t.division >= 0 else Color("28302c")
+		#if owner >= 0: fill = COLORS[owner].darkened(0.76)
+		
+		var fill = Color(0, 0, 0, 0)
+		
+		if owner >= 0:
+			fill = COLORS[owner]
+			fill.a = 0.22
+		
 		var border = Color("48585a") if owner < 0 else COLORS[owner].darkened(0.25)
 		if i == game.player().pos: border = Color("ffe6a3")
 		if i == inspected: border = Color.WHITE
@@ -100,18 +117,18 @@ func _draw() -> void:
 				var pt = r.position + Vector2(10 + p * 14, r.size.y - 8)
 				if i >= 34: pt = r.get_center() + Vector2((p - 1.5) * 7, 9)
 				draw_circle(pt, 5, COLORS[p])
-	draw_string(title_font, Vector2(320, 255), "Mitte Fehde", HORIZONTAL_ALIGNMENT_CENTER, 230, 32, Color("e5c887"))
-	text_at(Vector2(328, 277), "MITTERALTERICHE FEHDE", 12, Color("acb4a2"))
-	draw_cathedral()
-	text_at(Vector2(306, 470), "LAND  /  GOLD  /  CONQUEST", 14, Color("c6b99b"))
-	text_at(Vector2(313, 496), "First to 16 lots claims the realm", 14, Color("daca9c"))
-	text_at(Vector2(309, 548), "M = market    B = barracks", 13, Color("a5ad9b"))
-	text_at(Vector2(309, 571), "* = full division (income x2)", 13, Color("a5ad9b"))
-	text_at(Vector2(310, 597), "Click any lot to inspect it", 13, Color("a5ad9b"))
-	for j in range(4):
-		var label_pos = [Vector2(140, 130), Vector2(573, 130), Vector2(573, 510), Vector2(140, 510)][j]
-		text_at(label_pos, game.TRAILS[j], 12, Color("c9bc9e"))
-	if not event.is_empty(): draw_event()
+	#draw_string(title_font, Vector2(320, 255), "Mitte Fehde", HORIZONTAL_ALIGNMENT_CENTER, 230, 32, Color("e5c887"))
+	#text_at(Vector2(328, 277), "MITTERALTERICHE FEHDE", 12, Color("acb4a2"))
+	#draw_cathedral()
+	#text_at(Vector2(306, 470), "LAND  /  GOLD  /  CONQUEST", 14, Color("c6b99b"))
+	#text_at(Vector2(313, 496), "First to 16 lots claims the realm", 14, Color("daca9c"))
+	#text_at(Vector2(309, 548), "M = market    B = barracks", 13, Color("a5ad9b"))
+	#text_at(Vector2(309, 571), "* = full division (income x2)", 13, Color("a5ad9b"))
+	#text_at(Vector2(310, 597), "Click any lot to inspect it", 13, Color("a5ad9b"))
+	if not event.is_empty():
+		draw_set_transform(animation_position - Vector2(285, 285))
+		draw_event()
+		draw_set_transform(Vector2.ZERO)
 
 func draw_cathedral() -> void:
 	var stone = Color("485249")
@@ -147,7 +164,7 @@ func draw_event() -> void:
 	var c: Color = COLORS[event.actor]
 	var progress = 1.0 - animation_left / animation_duration
 	var moving = animation_left > 0
-	draw_style_box(panel(Color("151c1d"), Color("a68a51"), 2), Rect2(285, 285, 285, 242))
+	#draw_style_box(panel(Color("151c1d"), Color("a68a51"), 2), Rect2(285, 285, 285, 242))
 	draw_string(title_font, Vector2(298, 310), game.s.players[event.actor].name, HORIZONTAL_ALIGNMENT_CENTER, 260, 22, c)
 	var wave = sin(progress * TAU * 2) * (1 - progress) if moving else 0.0
 	if event.kind == "dice":
