@@ -1,11 +1,11 @@
-MITTERALTERICHE FEHDE / MITTE FEHDE
-Update 2 • offline playtest
+MITT FUED
+Update 2 â€¢ offline playtest
 
 START / WIN
-Four houses, each with 100 gold, 20 reserve troops, no land, zero checks. All start at Muster without an opening corner reward. Roll for initiative, reroll highest ties; then clockwise player order. Own 16 lots or be the last surviving house to win. There are 54 ownable lots in 12 divisions and four corner spaces.
+Four houses, each with 100 gold, 20 reserve troops, no land, zero checks. All start at Muster without an opening corner reward. Roll for initiative, reroll highest ties; then clockwise player order. Own 16 lots or be the last surviving house to win. There are 30 ownable lots in 8 divisions and four corner spaces.
 
 TURN
-Roll two dice and move clockwise. At a route branch choose the outer road or the six-lot inner division. You may deposit troops on owned lots you pass. Resolve your destination: buy unowned land, automatically take an undefended rival lot, or attack/pass on defended rival land. Then reinforce and build on your owned destination. Buy/resolve cards one at a time, or end your turn. Collect income ONCE at your own turn's end.
+Roll two dice and move clockwise. There are no trails or route choices. You may deposit troops or build on owned lots you pass. Resolve your destination: buy unowned land, automatically take an undefended rival lot, or attack/pass on defended rival land. Then reinforce and build on your owned destination. Buy/resolve cards one at a time, or end your turn. Collect income ONCE at your own turn's end.
 Original movement doubles allow one extra roll for 20 G, after resolving the destination and before cards. No chained extra rolls. Card movement reopens destination/deposit/build and then returns to cards, without extra EoT income.
 
 PRICES / INCOME PER BUILDING PER OWN TURN
@@ -19,8 +19,8 @@ Barracks output           2 T        3 T        4 T        6 T
 Base income: +20 G and +2 reserve T each own EoT.
 Every owned bare lot: +1 reserve T, NEVER doubled.
 Full division: double BUILDING output only. No base/card/bare-lot multiplier.
-One building per lot; one building purchase per destination step. New buildings pay this turn. Captured buildings remain, but may be demolished without refund; a replacement can then be built. Deposited troops cannot be retrieved.
-Two-lot prices are retained for reference/future maps; this map uses 3-, 4- and 6-lot divisions.
+One building per lot; one building purchase per movement, including stops while passing owned land. New buildings pay this turn. Captured buildings remain, but may be demolished without refund; a replacement can then be built. Deposited troops cannot be retrieved.
+This board uses two divisions of each size: 2, 3, 4 and 6 lots.
 
 COMMITTED COMBAT
 When attacking, first choose exactly how many reserve troops to commit. They leave reserve and form a separate attacking force. No reinforcements or second commitment during that encounter.
@@ -30,7 +30,7 @@ Casualties come only from the committed attackers or stationed defenders. Spare 
 Retreat returns surviving attackers to reserve and closes the attack opportunity for that destination. Victory transfers the lot and stations ALL surviving committed attackers. You may then reinforce in the normal management step. Undefended capture remains free/automatic without compulsory deposit.
 Supporting rulings for this version: any number from 1 to the full reserve may be committed; there is no forced one-troop reserve. Survivor return/occupation rules above complete the committed-force system.
 
-CARDS — YOUR 28-CARD DECK
+CARDS â€” YOUR 28-CARD DECK
 20 G per purchase; unlimited purchases while affordable. Each effect resolves immediately, then the card is in the discard pile. Shuffle discards when exhausted. Exactly one copy of each item below.
 
 SURPLUS (9)
@@ -46,14 +46,20 @@ Lose 15 G AND 2 T; lose 30 G AND 4 T; lose 40 G AND 6 T.
 MARCH (10)
 Forward 2, 3, 4, 5 or 6 spaces.
 Backward 2, 3, 4, 5 or 6 spaces.
-Resolve the destination normally in either direction. Forward follows clockwise links. Backward follows the reversed links; a route choice is offered at the opposite end of a six-lot division. It does not retrace a stored movement history. Corner effects apply on landing in either direction.
+Resolve the destination normally in either direction. Forward follows the outer ring clockwise. Backward follows it counterclockwise, wrapping around the same ring. Corner effects apply on landing in either direction.
 
 CHECKS / REQUIRED PAYMENT
 If a required cost is fully affordable in BOTH gold and reserve troops, it must be paid. If either part is unaffordable, take one check and lose NONE of those resources. No partial payments and no choosing a check to avoid an affordable payment. Card purchase price is already paid and is not refunded when its effect causes a check.
 Checks do not reset. On the third, eliminate the house and remove ownership, stationed troops and buildings; former lots become unowned. Optional unaffordable purchases are unavailable and do not cause checks.
 
-SIX-LOT DIVISIONS
-Northwatch Pass, Sunroad, Seaward Way and Shadowfen Trail are fully ownable divisions. Each contains six separately purchasable lots. Normal garrison, capture, market, barracks, bare-lot and complete-division income rules apply. Prices/output are in the table above. A complete six-lot division grants NO combat modifier. Full names appear when you click the numbered mini-lots. Layout changed to compact six-lot panels for readable garrisons and building markers; their road connections remain.
+BOARD / DIVISIONS
+Only the outer ring is playable: 34 spaces total, including 30 ownable lots.
+Clockwise from Muster:
+Top: Guildmarket (2 lots), Sunspire (6 lots), then Levy.
+Right: Tidewatch (3 lots), Red Keep (4 lots), then Treasury.
+Bottom: Riverhold (2 lots), Rose Quarter (6 lots), then Tax.
+Left: Unicorn Vale (3 lots), Lion's Reach (4 lots), then Muster.
+All outer lot names and positions are retained; division membership changes to match these sizes. The former 24 inner lots and all branch choices are removed. Owning a complete division doubles building income only; no combat modifier.
 
 CORNERS
 Muster: +10 reserve troops. Levy: pay 10 reserve troops.
@@ -62,9 +68,10 @@ Landing only; not passing or initial setup. Unaffordable costs use the check rul
 
 PRESENTATION / SAVES
 M = market; B = barracks; T = stationed troops; star = full division.
-Pawn/holding colors match the house panels. Central animations use the acting house's color; battles use both houses. Actual rolled dice are displayed after the brief rolling animation. The display dice animation uses no gameplay random numbers.
-Menu and Rules pause computer turns and animation timers. Manual Save/Load plus automatic saving after every action. Version 2 starts a new campaign; version 1 saves are incompatible.
+Pawn/holding colors match the house panels. Animations use the acting house's color; battles use both houses. Actual rolled dice are displayed after the brief rolling animation. The display dice animation uses no gameplay random numbers.
+Menu and Rules pause computer turns and animation timers. Manual Save/Load plus automatic saving after every action. Version 3 requires a new campaign. Version 1/2 maps cannot be loaded. The new title uses its own save directory and ring-specific filenames; old saves are left intact.
 
-PROVENANCE / REMAINING PLAYTEST RULINGS
-Latest direct user notes define the exact cards, fixed attacking force, mandatory up-to-three dice for both sides, six-lot divisions, name and no defense bonus. Six-lot values follow the proposed 60-G lot / 120-G market paying 40 / 100-G barracks paying 6 table. Earlier recovered rules define the economy, bare-lot exception, atomic checks, 16-lot victory and base turn loop.
-Still provisional: corner landing timing, route entry/exit positions, backward branch convention, one building per lot/destination, no troop retrieval, doubles timing/limit, persistent checks, last-survivor victory and the supporting commitment/survivor rulings. There are no placeholder cards now. AI, animations and illustration are PC adaptations.
+UPDATE SCOPE / RETAINED RULINGS
+The requested update removes the trails, divides eight-lot sides into 2 + 6 and seven-lot sides into 3 + 4, retains the original artwork, and renames the game Mitt Fued.
+All established prices and EoT outputs in the table are unchanged. Cards, combat, checks, base income, four players, corners, and 16-lot/last-survivor victory are retained. The 16-lot target is deliberately not rebalanced automatically for this smaller board.
+Other retained prototype rulings: corner effects on landing only, no troop retrieval, one building per movement, paid doubles before cards, and persistent checks.

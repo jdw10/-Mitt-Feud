@@ -21,13 +21,6 @@ class Artwork:
 		var ink = Color("c3a66e")
 		draw_rect(Rect2(3, 3, 864, 738), ink.darkened(0.35), false, 1)
 		draw_rect(Rect2(7, 7, 856, 730), ink.darkened(0.6), false, 1)
-		for tr in range(4):
-			var previous: Vector2 = boxes[[31, 6, 14, 23][tr]].get_center()
-			for j in range(6):
-				var current: Vector2 = boxes[34 + tr * 6 + j].get_center()
-				draw_line(previous, current, Color("826f46"), 2, true)
-				previous = current
-			draw_line(previous, boxes[[2, 11, 19, 28][tr]].get_center(), Color("826f46"), 2, true)
 		for i in range(boxes.size()):
 			var r: Rect2 = boxes[i]
 			var t: Dictionary = tiles[i]
@@ -56,17 +49,13 @@ class Artwork:
 			if overlay:
 				draw_rect(r, Color.CYAN, false, 1)
 				draw_string(font, r.position + Vector2(7, r.size.y - 7), str(i), HORIZONTAL_ALIGNMENT_LEFT, -1, 10, Color.CYAN)
-		for j in range(4):
-			var pos: Vector2 = [Vector2(135, 130), Vector2(566, 130), Vector2(566, 510), Vector2(135, 510)][j]
-			draw_rect(Rect2(pos + Vector2(-3, -14), Vector2(170, 19)), Color(0.04, 0.035, 0.03, 0.9))
-			draw_string(serif, pos, Game.TRAILS[j], HORIZONTAL_ALIGNMENT_CENTER, 165, 12, Color("e5cda0"))
-		draw_string(serif, Vector2(309, 194), "Mitte Fehde", HORIZONTAL_ALIGNMENT_CENTER, 253, 29, Color("382819"))
+		draw_string(serif, Vector2(309, 194), "Mitt Fued", HORIZONTAL_ALIGNMENT_CENTER, 253, 29, Color("382819"))
 
 func _initialize() -> void:
 	call_deferred("render_board")
 
 func render_board() -> void:
-	output = ProjectSettings.globalize_path("res://../MitteFehde-Art/")
+	output = ProjectSettings.globalize_path("res://art/")
 	root.size = Vector2i(1740, 1488)
 	root.content_scale_mode = Window.CONTENT_SCALE_MODE_DISABLED
 	root.content_scale_size = Vector2i.ZERO
@@ -94,7 +83,7 @@ func render_board() -> void:
 		await RenderingServer.frame_post_draw
 		var result = root.get_texture().get_image()
 		assert(result.get_size() == Vector2i(1740, 1488))
-		result.save_png(output + "MitteFehde-" + variant + ".png")
+		result.save_png(output + "MittFued-" + variant + ".png")
 	var coordinates: Array = []
 	for i in range(board.boxes.size()):
 		var r: Rect2 = board.boxes[i]
@@ -102,5 +91,5 @@ func render_board() -> void:
 	var file = FileAccess.open(output + "hitboxes.json", FileAccess.WRITE)
 	file.store_string(JSON.stringify({"logical_size": [870, 744], "png_size": [1740, 1488], "scale": 2, "hitboxes": coordinates}, "  "))
 	board.free()
-	print("Exported 3 PNGs at 1740x1488. 58 rectangles sourced directly from board.gd. Display at (0,0), size 870x744.")
+	print("Exported 3 PNGs at 1740x1488. 34 rectangles sourced directly from board.gd. Display at (0,0), size 870x744.")
 	quit()

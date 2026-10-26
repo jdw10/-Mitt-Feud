@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://bahsiwdocfhub" path="res://main.gd" id="1"]
 
-[node name="GothicRealm" type="Control" unique_id=1662742776]
+[node name="MittFued" type="Control" unique_id=1662742776]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0

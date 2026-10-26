@@ -28,7 +28,7 @@
       "y": 16.0
     },
     {
-      "division": 0,
+      "division": 1,
       "height": 90.0,
       "index": 3,
       "name": "Silver Hall",
@@ -37,7 +37,7 @@
       "y": 16.0
     },
     {
-      "division": 0,
+      "division": 1,
       "height": 90.0,
       "index": 4,
       "name": "Guild House",
@@ -181,7 +181,7 @@
       "y": 639.0
     },
     {
-      "division": 4,
+      "division": 5,
       "height": 90.0,
       "index": 20,
       "name": "Reedbank",
@@ -190,7 +190,7 @@
       "y": 639.0
     },
     {
-      "division": 4,
+      "division": 5,
       "height": 90.0,
       "index": 21,
       "name": "Watermill",
@@ -271,7 +271,7 @@
       "y": 410.0
     },
     {
-      "division": 6,
+      "division": 7,
       "height": 71.0,
       "index": 30,
       "name": "Dreamer's Rest",
@@ -305,222 +305,6 @@
       "width": 100.0,
       "x": 16.0,
       "y": 110.0
-    },
-    {
-      "division": 8,
-      "height": 49.0,
-      "index": 34,
-      "name": "Tollgate",
-      "width": 49.0,
-      "x": 140.0,
-      "y": 139.0
-    },
-    {
-      "division": 8,
-      "height": 49.0,
-      "index": 35,
-      "name": "Wolfstone",
-      "width": 49.0,
-      "x": 193.0,
-      "y": 139.0
-    },
-    {
-      "division": 8,
-      "height": 49.0,
-      "index": 36,
-      "name": "Pine Bend",
-      "width": 49.0,
-      "x": 246.0,
-      "y": 139.0
-    },
-    {
-      "division": 8,
-      "height": 49.0,
-      "index": 37,
-      "name": "Milestone",
-      "width": 49.0,
-      "x": 246.0,
-      "y": 193.0
-    },
-    {
-      "division": 8,
-      "height": 49.0,
-      "index": 38,
-      "name": "High Bridge",
-      "width": 49.0,
-      "x": 193.0,
-      "y": 193.0
-    },
-    {
-      "division": 8,
-      "height": 49.0,
-      "index": 39,
-      "name": "Frost Gate",
-      "width": 49.0,
-      "x": 140.0,
-      "y": 193.0
-    },
-    {
-      "division": 9,
-      "height": 49.0,
-      "index": 40,
-      "name": "East Gate",
-      "width": 49.0,
-      "x": 573.0,
-      "y": 139.0
-    },
-    {
-      "division": 9,
-      "height": 49.0,
-      "index": 41,
-      "name": "Chapel",
-      "width": 49.0,
-      "x": 626.0,
-      "y": 139.0
-    },
-    {
-      "division": 9,
-      "height": 49.0,
-      "index": 42,
-      "name": "Gold Mile",
-      "width": 49.0,
-      "x": 679.0,
-      "y": 139.0
-    },
-    {
-      "division": 9,
-      "height": 49.0,
-      "index": 43,
-      "name": "Vineway",
-      "width": 49.0,
-      "x": 679.0,
-      "y": 193.0
-    },
-    {
-      "division": 9,
-      "height": 49.0,
-      "index": 44,
-      "name": "Wayside Well",
-      "width": 49.0,
-      "x": 626.0,
-      "y": 193.0
-    },
-    {
-      "division": 9,
-      "height": 49.0,
-      "index": 45,
-      "name": "Pilgrim Stone",
-      "width": 49.0,
-      "x": 573.0,
-      "y": 193.0
-    },
-    {
-      "division": 10,
-      "height": 49.0,
-      "index": 46,
-      "name": "Harbor",
-      "width": 49.0,
-      "x": 573.0,
-      "y": 520.0
-    },
-    {
-      "division": 10,
-      "height": 49.0,
-      "index": 47,
-      "name": "Salt Road",
-      "width": 49.0,
-      "x": 626.0,
-      "y": 520.0
-    },
-    {
-      "division": 10,
-      "height": 49.0,
-      "index": 48,
-      "name": "Gullstone",
-      "width": 49.0,
-      "x": 679.0,
-      "y": 520.0
-    },
-    {
-      "division": 10,
-      "height": 49.0,
-      "index": 49,
-      "name": "Windmill",
-      "width": 49.0,
-      "x": 679.0,
-      "y": 574.0
-    },
-    {
-      "division": 10,
-      "height": 49.0,
-      "index": 50,
-      "name": "Beacon Bend",
-      "width": 49.0,
-      "x": 626.0,
-      "y": 574.0
-    },
-    {
-      "division": 10,
-      "height": 49.0,
-      "index": 51,
-      "name": "Cliff Bridge",
-      "width": 49.0,
-      "x": 573.0,
-      "y": 574.0
-    },
-    {
-      "division": 11,
-      "height": 49.0,
-      "index": 52,
-      "name": "Low Gate",
-      "width": 49.0,
-      "x": 140.0,
-      "y": 520.0
-    },
-    {
-      "division": 11,
-      "height": 49.0,
-      "index": 53,
-      "name": "Ash Ford",
-      "width": 49.0,
-      "x": 193.0,
-      "y": 520.0
-    },
-    {
-      "division": 11,
-      "height": 49.0,
-      "index": 54,
-      "name": "Willow Bend",
-      "width": 49.0,
-      "x": 246.0,
-      "y": 520.0
-    },
-    {
-      "division": 11,
-      "height": 49.0,
-      "index": 55,
-      "name": "Blackwater",
-      "width": 49.0,
-      "x": 246.0,
-      "y": 574.0
-    },
-    {
-      "division": 11,
-      "height": 49.0,
-      "index": 56,
-      "name": "Moorstone",
-      "width": 49.0,
-      "x": 193.0,
-      "y": 574.0
-    },
-    {
-      "division": 11,
-      "height": 49.0,
-      "index": 57,
-      "name": "Raven Post",
-      "width": 49.0,
-      "x": 140.0,
-      "y": 574.0
     }
   ],
   "logical_size": [

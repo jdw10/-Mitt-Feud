@@ -1,12 +1,13 @@
-# Mitte Fehde v2 validation
+# Mitt Fued outer-ring update — validation
 
-Official Godot 4.5 stable, Windows x64, NVIDIA MX570 A / OpenGL compatibility renderer.
+Tested using the included Godot 4.5 stable runtime.
 
-**90 rule checks passed; 0 failed.** Includes exact effects for all 28 cards, mandatory dice counts at 1/2/3/5 troops for both sides, fixed commitment, no mid-fight reinforcement, retreat/survivor handling, defeat with reserves remaining, three paired casualties, and explicit absence of a full-division defense bonus. Backward movement is checked on the outer loop, around zero, inside a trail, and across a reversed trail entrance/exit. Six-lot acquisition, prices, bare-lot income, full-division building multiplier and losing that multiplier are checked.
-
-Existing atomic-payment, elimination, once-per-turn income, purchase, building, capture, doubles, victory and save/RNG regressions also pass. Twenty seeded full AI campaigns reached a winner within 15,000 decisions each. Every simulated step checked nonnegative resources, committed-force count and unowned-lot cleanup.
-
-**21 UI checks passed; 0 failed.** Real Button callbacks exercised movement, six-lot purchase, troop stationing, market construction, card phase, end turn, selecting a commitment, battle round, and retreat. Tests verify three dice per side, differing battle-animation frames, dice/building animation activation, input gating, AI pacing, pause timing and automatic release of controls. Manual saving/loading and Rules/Menu opening also ran without engine errors. Rendered board, dice, building and two-color battle screenshots were inspected.
-
-The tests do not establish final balance, guarantee short matches, or constitute a manual full human campaign. Only Windows was run. The package remains an editable offline prototype with a bundled engine, not a signed release/Steam build.
-
+- Rules suite: 141 passed, 0 failed, including 20 complete seeded AI campaigns.
+- Rendered UI suite: 23 checks, 0 failures. Exercises purchase, stationing, six-lot market, end turn, commitment, battle dice, retreat, save/load callbacks, animation timing, pause and action gating.
+- Both eight-lot sides split 2 + 6; both seven-lot sides split 3 + 4. Four corner indices retained.
+- All four division sizes tested for lot costs, market/barracks costs, partial income, full-division doubled building income and undoubled bare-lot income.
+- Passing builds, forward/backward movement, corner landing effects, save/RNG restoration and old-map rejection tested.
+- Actual rendered board inspected: artwork intact, no inner trails or hitboxes, Mitt Fued title visible.
+- Art exporter completed: three 1740 x 1488 PNGs and 34-entry hitboxes.json, preserving original outer coordinates.
+- The sandbox denied shader-cache creation during rendered tests; rendering and checks completed successfully. A staging-only script UID fallback warning used the correct script path.
+- Four players and the 16-lot victory target retained by design; no balance retuning or online changes.

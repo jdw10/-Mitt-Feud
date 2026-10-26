@@ -12,7 +12,7 @@ var animation_left = 0.0
 var animation_position = Vector2(995, 170)
 var animation_duration = 1.0
 
-var board_art = preload("res://art/MitteFehde-board-unlabelled.png")
+var board_art = preload("res://art/gothic-background.png")
 
 func animate(data: Dictionary, duration: float) -> void:
 	event = data.duplicate(true)
@@ -38,12 +38,6 @@ func layout_board() -> void:
 	for i in range(8): boxes.append(Rect2(120 + (7 - i) * 77, 639, 73, 90))
 	boxes.append(Rect2(16, 639, 100, 90))
 	for i in range(7): boxes.append(Rect2(16, 110 + (6 - i) * 75, 100, 71))
-	# Six readable mini-lots in each former trail, linked in a serpentine path.
-	var origins = [Vector2(140, 139), Vector2(573, 139), Vector2(573, 520), Vector2(140, 520)]
-	for origin in origins:
-		for j in range(6):
-			var col = j if j < 3 else 5 - j
-			boxes.append(Rect2(origin + Vector2(col * 53, 0 if j < 3 else 54), Vector2(49, 49)))
 
 func text_at(pos: Vector2, value: String, font_size: int, color: Color, width: float = -1) -> void:
 	draw_string(font, pos, value, HORIZONTAL_ALIGNMENT_LEFT, width, font_size, color)
@@ -58,14 +52,7 @@ func _draw() -> void:
 		Rect2(0, 0, 870, 744),
 		false
 	)
-	for tr in range(4):
-		var previous = boxes[[31, 6, 14, 23][tr]].get_center()
-		for j in range(6):
-			var current = boxes[34 + tr * 6 + j].get_center()
-			draw_line(previous, current, Color("465651"), 2)
-			previous = current
-		draw_line(previous, boxes[[2, 11, 19, 28][tr]].get_center(), Color("465651"), 2)
-	for i in range(58):
+	for i in range(game.s.tiles.size()):
 		var t = game.s.tiles[i]
 		var r = boxes[i]
 		var owner: int = t.owner
@@ -73,24 +60,16 @@ func _draw() -> void:
 		#var fill = Color("1d2b30") if t.division >= 0 else Color("28302c")
 		#if owner >= 0: fill = COLORS[owner].darkened(0.76)
 		
-		var fill = Color(0, 0, 0, 0)
+		var fill = Color(0.035, 0.042, 0.040, 0.93)
 		
 		if owner >= 0:
-			fill = COLORS[owner]
-			fill.a = 0.22
+			fill = COLORS[owner].darkened(0.82)
 		
 		var border = Color("48585a") if owner < 0 else COLORS[owner].darkened(0.25)
 		if i == game.player().pos: border = Color("ffe6a3")
 		if i == inspected: border = Color.WHITE
 		draw_style_box(panel(fill, border, 2 if i == game.player().pos or i == inspected else 1), r)
-		if i >= 34:
-			draw_rect(Rect2(r.position, Vector2(r.size.x, 4)), Color(GROUP_COLORS[t.division]))
-			text_at(r.position + Vector2(5, 18), "Lot " + str((i - 34) % 6 + 1), 10, Color("e1e1ce"))
-			var tag = "60 G" if owner < 0 else str(t.troops) + " T"
-			if t.building != "": tag += "M" if t.building == "market" else "B"
-			text_at(r.position + Vector2(4, 34), tag, 10, Color("c6ccbd"))
-			if owner >= 0 and game.full_division(t.division, owner): text_at(r.position + Vector2(38, 18), "*", 14, Color("ffdc86"))
-		elif t.division >= 0:
+		if t.division >= 0:
 			draw_rect(Rect2(r.position, Vector2(r.size.x, 5)), Color(GROUP_COLORS[t.division]))
 			var words: Array = t.name.split(" ")
 			var line = ""
@@ -110,21 +89,11 @@ func _draw() -> void:
 		elif t.division == -1:
 			text_at(r.position + Vector2(7, 24), t.name.split(" / ")[0], 14, Color("dfc48a"))
 			text_at(r.position + Vector2(7, 46), t.name.split(" / ")[1], 15, Color("f0dfba"))
-		else:
-			text_at(r.position + Vector2(11, 19), str((i - 34) % 6 + 1), 11, Color("b5b29f"))
 		for p in range(4):
 			if game.s.players[p].alive and game.s.players[p].pos == i:
 				var pt = r.position + Vector2(10 + p * 14, r.size.y - 8)
-				if i >= 34: pt = r.get_center() + Vector2((p - 1.5) * 7, 9)
 				draw_circle(pt, 5, COLORS[p])
-	#draw_string(title_font, Vector2(320, 255), "Mitte Fehde", HORIZONTAL_ALIGNMENT_CENTER, 230, 32, Color("e5c887"))
-	#text_at(Vector2(328, 277), "MITTERALTERICHE FEHDE", 12, Color("acb4a2"))
-	#draw_cathedral()
-	#text_at(Vector2(306, 470), "LAND  /  GOLD  /  CONQUEST", 14, Color("c6b99b"))
-	#text_at(Vector2(313, 496), "First to 16 lots claims the realm", 14, Color("daca9c"))
-	#text_at(Vector2(309, 548), "M = market    B = barracks", 13, Color("a5ad9b"))
-	#text_at(Vector2(309, 571), "* = full division (income x2)", 13, Color("a5ad9b"))
-	#text_at(Vector2(310, 597), "Click any lot to inspect it", 13, Color("a5ad9b"))
+	draw_string(title_font, Vector2(309, 194), "Mitt Fued", HORIZONTAL_ALIGNMENT_CENTER, 253, 29, Color("382819"))
 	if not event.is_empty():
 		draw_set_transform(animation_position - Vector2(285, 285))
 		draw_event()

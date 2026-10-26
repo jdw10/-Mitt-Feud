@@ -19,7 +19,7 @@ func fresh():
 
 func _initialize() -> void:
 	var g = fresh()
-	verify(g.s.tiles.size() == 58, "54 ownable lots + 4 corners")
+	verify(g.s.tiles.size() == 34, "30 ownable lots + 4 corners")
 	verify(g.player().gold == 100 and g.player().reserve == 20, "Starting resources")
 	g.player().gold = 20
 	g.player().reserve = 8
@@ -39,16 +39,16 @@ func _initialize() -> void:
 	verify(not g.s.players[0].alive and g.s.tiles[1].owner == -1 and g.s.tiles[1].troops == 0 and g.s.tiles[1].building == "", "Third check clears every holding and building")
 	verify(g.s.turn == 1 and g.s.phase == "roll", "Elimination advances to next active house")
 	g = fresh()
-	for i in range(1, 5): g.s.tiles[i].owner = 0
+	for i in range(13, 17): g.s.tiles[i].owner = 0
 	verify(g.income(0) == [20, 6], "Full division does not double bare lots or base")
-	g.s.tiles[1].building = "market"
-	g.s.tiles[2].building = "barracks"
+	g.s.tiles[13].building = "market"
+	g.s.tiles[14].building = "barracks"
 	verify(g.income(0) == [60, 12], "Full division doubles buildings only")
-	g.s.tiles[4].owner = 1
+	g.s.tiles[16].owner = 1
 	verify(g.income(0) == [40, 7], "Losing a lot removes division building multiplier")
-	verify(g.building_cost("market", 0) == 60 and g.building_cost("market", 2) == 30, "Updated market costs")
+	verify(g.building_cost("market", 3) == 60 and g.building_cost("market", 2) == 30, "Four/three-lot market costs unchanged")
 	g = fresh()
-	g.player().pos = 1
+	g.player().pos = 13
 	g.s.phase = "lot"
 	g.player().gold = 1
 	verify(not g.buy_lot() and g.player().checks == 0, "Optional unaffordable purchase gives no check")
@@ -92,7 +92,7 @@ func _initialize() -> void:
 	g.resolve_battle([6, 5, 4], [1])
 	verify(g.tile().owner == 0 and g.tile().troops == 3 and g.player().reserve == 16 and g.s.committed == 0, "Surviving committed attackers occupy captured lot")
 	g = fresh()
-	for i in range(1, 5): g.s.tiles[i].owner = 1
+	for i in range(1, 3): g.s.tiles[i].owner = 1
 	g.player().pos = 1
 	g.tile().troops = 1
 	g.s.phase = "lot"
@@ -159,32 +159,27 @@ func _initialize() -> void:
 		g.s.phase = "cards"
 		g.s.deck = [id]
 		g.buy_card()
-		while g.s.phase == "route": g.choose_route(false)
 		var step_value = id - 16 if id < 23 else -(id - 21)
 		verify(g.player().pos == posmod(20 + step_value, 34), "Exact March card %d" % id)
 	g = fresh()
 	g.player().pos = 11
 	g.start_move(-7, true)
-	g.choose_route(true)
-	verify(g.player().pos == 6, "Backward traversal enters trail at exit and returns to entrance")
-	g.player().pos = 42
-	g.start_move(-2, true)
-	verify(g.player().pos == 40, "Backward movement inside six-lot division")
+	verify(g.player().pos == 4 and g.s.phase != "route", "Backward movement follows the outer ring without a branch")
 	g = fresh()
 	g.player().pos = 0
 	g.start_move(-1, true)
 	verify(g.player().pos == 33, "Backward outer road wraps around zero")
 	g = fresh()
-	g.player().pos = 34
+	g.player().pos = 3
 	g.arrive()
 	verify(g.buy_lot() and g.player().gold == 40, "Six-lot territory can be purchased for 60 G")
-	verify(g.building_cost("market", 8) == 120 and g.building_cost("barracks", 8) == 100, "Six-lot building prices")
-	for i in range(34, 40): g.s.tiles[i].owner = 0
+	verify(g.building_cost("market", 1) == 120 and g.building_cost("barracks", 1) == 100, "Six-lot building prices")
+	for i in range(3, 9): g.s.tiles[i].owner = 0
 	verify(g.income(0) == [20, 8], "Six bare lots give six troops without doubling")
-	g.s.tiles[34].building = "market"
-	g.s.tiles[35].building = "barracks"
+	g.s.tiles[3].building = "market"
+	g.s.tiles[4].building = "barracks"
 	verify(g.income(0) == [100, 18], "Six-lot full division doubles 40 G market and 6 T barracks only")
-	g.s.tiles[39].owner = 1
+	g.s.tiles[8].owner = 1
 	verify(g.income(0) == [60, 11], "Losing a six-lot division removes multiplier")
 	g = fresh()
 	g.s.deck.clear()
@@ -194,9 +189,7 @@ func _initialize() -> void:
 	g = fresh()
 	g.player().pos = 6
 	g.start_move(7, false)
-	verify(g.s.phase == "route", "Trail branch prompts for choice")
-	g.choose_route(true)
-	verify(g.player().pos == 11, "Six ownable spaces then correct trail exit")
+	verify(g.player().pos == 13 and g.s.phase == "lot", "Former branch now moves seven spaces along outer road")
 	g = fresh()
 	g.s.tiles[1].owner = 0
 	g.start_move(2, false)
@@ -229,6 +222,56 @@ func _initialize() -> void:
 	var h = Game.new()
 	verify(h.load_game("res://test-save.tmp") and h.die() == expected, "Load restores state and RNG exactly")
 	DirAccess.remove_absolute("res://test-save.tmp")
+	# All side splits and every established division-size economy.
+	g = fresh()
+	verify(Game.DIVISIONS.size() == 8, "Eight divisions, no inner trails")
+	var sizes = [2, 6, 3, 4, 2, 6, 3, 4]
+	for d in range(8):
+		verify(g.size_of(d) == sizes[d], "Division %d has requested size" % d)
+	for corner in [0, 9, 17, 26]:
+		verify(g.s.tiles[corner].division == -1, "Corner %d unchanged" % corner)
+	for d in [0, 2, 3, 1]:
+		g = fresh()
+		var n = g.size_of(d)
+		var ids: Array = []
+		for i in range(g.s.tiles.size()):
+			if g.s.tiles[i].division == d: ids.append(i)
+		g.player().pos = ids[0]
+		g.s.phase = "lot"
+		verify(g.buy_lot() and g.player().gold == 100 - n * 10, "Lot price for size %d" % n)
+		verify(g.building_cost("market", d) == {2: 15, 3: 30, 4: 60, 6: 120}[n], "Market cost for size %d" % n)
+		verify(g.building_cost("barracks", d) == {2: 20, 3: 40, 4: 60, 6: 100}[n], "Barracks cost for size %d" % n)
+		g.tile().building = "market"
+		verify(g.income(0) == [20 + {2: 5, 3: 10, 4: 20, 6: 40}[n], 2], "Partial market income for size %d" % n)
+		g.tile().building = "barracks"
+		verify(g.income(0) == [20, 2 + n], "Partial barracks income for size %d" % n)
+		for i in ids: g.s.tiles[i].owner = 0
+		g.tile().building = ""
+		verify(g.income(0) == [20, 2 + n], "Full bare division never doubles for size %d" % n)
+		g.tile().building = "market"
+		g.s.tiles[ids[1]].building = "barracks"
+		verify(g.income(0) == [20 + {2: 5, 3: 10, 4: 20, 6: 40}[n] * 2, 2 + n * 2 + n - 2], "Full building outputs for size %d" % n)
+	g = fresh()
+	g.s.tiles[1].owner = 0
+	g.s.tiles[2].owner = 0
+	g.start_move(3, false)
+	verify(g.build("market"), "Build while passing owned land")
+	g.continue_march()
+	verify(not g.build("barracks"), "Only one build during same march")
+	g.continue_march()
+	verify(g.player().pos == 3, "Passing builds consume no movement")
+	for corner in [0, 9, 17, 26]:
+		for direction in [-1, 1]:
+			g = fresh()
+			g.player().pos = posmod(corner - direction, 34)
+			g.start_move(direction, true)
+			verify(g.player().pos == corner and g.player().gold == 100 + g.tile().effect_g and g.player().reserve == 20 + g.tile().effect_t, "Corner landing from either direction")
+	g = fresh()
+	g.s.version = 2
+	g.save_game("res://old-map-save.tmp")
+	var unchanged: Dictionary = h.s.duplicate(true)
+	verify(not h.load_game("res://old-map-save.tmp") and h.s == unchanged, "Old map saves rejected without mutating game")
+	DirAccess.remove_absolute("res://old-map-save.tmp")
 	var wins = 0
 	for seed_value in range(1, 21):
 		g.new_game(0, seed_value)
@@ -237,7 +280,7 @@ func _initialize() -> void:
 			g.ai_step()
 			var valid = true
 			for p in g.s.players:
-				if p.gold < 0 or p.reserve < 0 or g.s.committed < 0: valid = false
+				if p.gold < 0 or p.reserve < 0 or g.s.committed < 0 or p.pos < 0 or p.pos >= 34: valid = false
 			for t in g.s.tiles:
 				if t.troops < 0 or (t.owner == -1 and (t.troops != 0 or t.building != "")): valid = false
 			if not valid:

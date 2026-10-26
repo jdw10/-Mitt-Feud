@@ -16,7 +16,7 @@ var selected = -1
 var humans = 1
 var animations_enabled = true
 var animation_left = 0.0
-var save_path = "user://campaign.save"
+var save_path = "user://campaign-ring.save"
 
 func _ready() -> void:
 	make_theme()
@@ -87,7 +87,7 @@ func build_ui() -> void:
 	margin.add_child(root)
 	var top = HBoxContainer.new()
 	root.add_child(top)
-	header = label("MITTE FEHDE", top, 26)
+	header = label("MITT FUED", top, 26)
 	var serif = SystemFont.new()
 	serif.font_names = PackedStringArray(["Georgia", "Times New Roman"])
 	header.add_theme_font_override("font", serif)
@@ -150,7 +150,7 @@ func act(call: Callable) -> void:
 	selected = -1
 	board.inspected = -1
 	refresh()
-	game.save_game("user://autosave.save")
+	game.save_game("user://autosave-ring.save")
 
 func _process(delta: float) -> void:
 	if animation_left > 0 and not paused:
@@ -174,7 +174,7 @@ func refresh() -> void:
 		label("  %d G   |   %d reserve T   |   %d/16 lots  " % [p.gold, p.reserve, game.count_lots(i)], box, 15)
 		var gain = game.income(i)
 		label("  Checks %d/3    EoT +%d G / +%d T" % [p.checks, gain[0], gain[1]] if p.alive else "  ELIMINATED", box, 13)
-	header.text = "MITTE FEHDE   /   Turn %d" % game.s.turn_number
+	header.text = "MITT FUED   /   Turn %d" % game.s.turn_number
 	board.queue_redraw()
 	chronicle.text = "\n".join(game.s.log)
 	inspect(selected if selected >= 0 else game.player().pos)
@@ -210,7 +210,7 @@ func build_actions() -> void:
 		button("Play again", actions, show_menu)
 		return
 	if animation_left > 0:
-		label("Watch the action in the center…", actions)
+		label("Watch the action…", actions)
 		return
 	if not p.human:
 		label("The rival house is taking its turn…", actions)
@@ -223,12 +223,8 @@ func build_actions() -> void:
 		"roll":
 			hint.text = "Roll two dice, then buy, reinforce or fight at your destination."
 			action_button("Roll & march", func(): game.roll_move())
-		"route":
-			hint.text = "%d steps remain (%s). Choose the outer road or six-lot division." % [game.s.remaining, "forward" if game.s.direction > 0 else "backward"]
-			action_button("Follow the outer road", func(): game.choose_route(false))
-			action_button("Take " + Game.TRAILS[game.trail_at(p.pos)], func(): game.choose_route(true))
 		"march_deposit":
-			hint.text = "Passing your land: you may leave troops here. %d steps remain." % game.s.remaining
+			hint.text = "Passing your land: you may station troops or build here. %d steps remain." % game.s.remaining
 			deposit_controls()
 			if t.building == "" and not game.s.built:
 				for kind in ["market", "barracks"]:
@@ -309,7 +305,7 @@ func load_current() -> void:
 		selected = -1
 		refresh()
 		status.text = "Campaign loaded."
-	else: status.text = "No compatible manual save found. Use Menu to resume an autosave."
+	else: status.text = "No compatible ring-board save found. Start a new campaign for this map."
 
 func popup(title_value: String, dimensions: Vector2i) -> Window:
 	paused = true
@@ -330,14 +326,14 @@ func show_menu() -> void:
 		paused = true
 		menu.popup_centered()
 		return
-	menu = popup("Mitte Fehde | Campaign", Vector2i(560, 470))
+	menu = popup("Mitt Fued | Campaign", Vector2i(560, 470))
 	var box = VBoxContainer.new()
 	box.position = Vector2(30, 25)
 	box.size = Vector2(500, 420)
 	box.add_theme_constant_override("separation", 14)
 	menu.add_child(box)
-	label("MITTE FEHDE", box, 30)
-	label("Mitteralteriche Fehde — offline playtest", box, 17)
+	label("MITT FUED", box, 30)
+	label("Mitt Fued — offline playtest", box, 17)
 	var intro = label("Build your treasury. Garrison your land. Claim 16 lots.\nFour houses take turns on one computer.", box, 16)
 	intro.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	var mode = OptionButton.new()
@@ -347,11 +343,11 @@ func show_menu() -> void:
 	confirm.dialog_text = "Start a new campaign? The current autosave will be replaced. Your manual save stays available."
 	confirm.title = "New campaign"
 	menu.add_child(confirm)
-	confirm.confirmed.connect(func(): humans = mode.selected + 1; game.new_game(humans); menu.hide(); paused = false; animation_left = 0; board.event = {}; selected = -1; refresh(); game.save_game("user://autosave.save"))
+	confirm.confirmed.connect(func(): humans = mode.selected + 1; game.new_game(humans); menu.hide(); paused = false; animation_left = 0; board.event = {}; selected = -1; refresh(); game.save_game("user://autosave-ring.save"))
 	button("Start new campaign", box, func(): confirm.popup_centered())
 	button("Continue current campaign", box, func(): menu.hide(); paused = false)
 	button("Resume autosave", box, func():
-		if game.load_game("user://autosave.save"):
+		if game.load_game("user://autosave-ring.save"):
 			menu.hide(); paused = false; animation_left = 0; board.event = {}; selected = -1; refresh()
 		else: status.text = "No compatible autosave found.")
 	button("Quit", box, func(): get_tree().quit())

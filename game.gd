@@ -1,22 +1,18 @@
 extends RefCounted
 ## Rules live here, independent of presentation. All actions validate their phase.
-const VERSION = 2
+const VERSION = 3
 const HOUSES = ["House Alder", "House Ember", "House Azure", "House Ivory"]
 const DIVISIONS = [
-	["Guildmarket", ["Wool Row", "Spice Stall", "Silver Hall", "Guild House"]],
-	["Sunspire", ["Belfry", "Cloister", "Shrine Walk", "Pilgrim Rest"]],
+	["Guildmarket", ["Wool Row", "Spice Stall"]],
+	["Sunspire", ["Silver Hall", "Guild House", "Belfry", "Cloister", "Shrine Walk", "Pilgrim Rest"]],
 	["Tidewatch", ["Salt Wharf", "Gull Haven", "Beacon"]],
 	["Red Keep", ["Forge Yard", "Barracks", "Armory", "Ember Gate"]],
-	["Riverhold", ["Blue Bridge", "Ferry", "Reedbank", "Watermill"]],
-	["Rose Quarter", ["Rose Lane", "Weaver Court", "Maiden Well", "Lantern Row"]],
-	["Unicorn Vale", ["Moonwell", "Silver Glade", "Lavender", "Dreamer's Rest"]],
-	["Lion's Reach", ["Goldmane", "Banner Hill", "Lion's Rest"]],
-	["Northwatch Pass", ["Tollgate", "Wolfstone", "Pine Bend", "Milestone", "High Bridge", "Frost Gate"]],
-	["Sunroad", ["East Gate", "Chapel", "Gold Mile", "Vineway", "Wayside Well", "Pilgrim Stone"]],
-	["Seaward Way", ["Harbor", "Salt Road", "Gullstone", "Windmill", "Beacon Bend", "Cliff Bridge"]],
-	["Shadowfen Trail", ["Low Gate", "Ash Ford", "Willow Bend", "Blackwater", "Moorstone", "Raven Post"]]
+	["Riverhold", ["Blue Bridge", "Ferry"]],
+	["Rose Quarter", ["Reedbank", "Watermill", "Rose Lane", "Weaver Court", "Maiden Well", "Lantern Row"]],
+	["Unicorn Vale", ["Moonwell", "Silver Glade", "Lavender"]],
+	["Lion's Reach", ["Dreamer's Rest", "Goldmane", "Banner Hill", "Lion's Rest"]]
 ]
-const TRAILS = ["Northwatch Pass", "Sunroad", "Seaward Way", "Shadowfen Trail"]
+const BOARD_SIZE = 34
 const CARDS = [
 	["SURPLUS", "Gain 20 gold.", 20, 0, 0],
 	["SURPLUS", "Gain 30 gold.", 30, 0, 0],
@@ -65,10 +61,7 @@ func new_game(humans: int = 1, seed_value: int = 0) -> void:
 		if d == 1: add_tile("Levy / -10 T", -1, -10, 0)
 		if d == 3: add_tile("Treasury / +100 G", -1, 0, 100)
 		if d == 5: add_tile("Tax / -100 G", -1, 0, -100)
-	# Outer loop: 34 spaces. Four six-lot divisions form the inner routes.
-	for t in range(4):
-		for j in range(6):
-			add_tile(DIVISIONS[8 + t][1][j], 8 + t)
+	# One outer ring: 30 ownable lots and four corners.
 	var contenders = [0, 1, 2, 3]
 	while contenders.size() > 1:
 		var best = 0
@@ -196,22 +189,11 @@ func start_move(steps: int, from_card: bool) -> void:
 	s.phase = "moving"
 	advance_move()
 
-func trail_at(pos: int) -> int:
-	# Entry/exit links are provisional; six-space paths bypass the corner.
-	return ([31, 6, 14, 23] if s.direction > 0 else [2, 11, 19, 28]).find(pos)
-
 func next_outer(pos: int) -> int:
-	if pos < 34: return posmod(pos + s.direction, 34)
-	var tr = int((pos - 34) / 6)
-	if s.direction > 0 and (pos - 34) % 6 == 5: return [2, 11, 19, 28][tr]
-	if s.direction < 0 and (pos - 34) % 6 == 0: return [31, 6, 14, 23][tr]
-	return pos + s.direction
+	return posmod(pos + s.direction, BOARD_SIZE)
 
 func advance_move() -> void:
 	while s.remaining > 0:
-		if trail_at(player().pos) >= 0:
-			s.phase = "route"
-			return
 		step_to(next_outer(player().pos))
 		if s.phase == "march_deposit": return
 	arrive()
@@ -222,15 +204,6 @@ func step_to(pos: int) -> void:
 	s.visited.append(pos)
 	if s.remaining > 0 and tile().owner == s.turn and player().reserve > 0:
 		s.phase = "march_deposit"
-
-func choose_route(shortcut: bool) -> bool:
-	if s.phase != "route": return false
-	var tr = trail_at(player().pos)
-	if tr < 0: return false
-	s.phase = "moving"
-	step_to(34 + tr * 6 + (0 if s.direction > 0 else 5) if shortcut else next_outer(player().pos))
-	if s.phase != "march_deposit": advance_move()
-	return true
 
 func continue_march() -> bool:
 	if s.phase != "march_deposit": return false
@@ -422,7 +395,6 @@ func next_turn() -> void:
 func ai_step() -> void:
 	match s.phase:
 		"roll": roll_move()
-		"route": choose_route(rng.randf() < 0.55)
 		"march_deposit":
 			ai_reinforce()
 			continue_march()
@@ -469,7 +441,10 @@ func load_game(path: String) -> bool:
 	if not candidate is Dictionary or candidate.get("version") != VERSION: return false
 	for key in ["players", "tiles", "turn", "phase", "deck", "discard", "log", "winner"]:
 		if not candidate.has(key): return false
-	if candidate.players.size() != 4 or candidate.tiles.size() != 58 or candidate.turn < 0 or candidate.turn > 3: return false
+	if candidate.players.size() != 4 or candidate.tiles.size() != BOARD_SIZE or candidate.turn < 0 or candidate.turn > 3: return false
+	for p in candidate.players:
+		if not p is Dictionary or not p.has("pos") or p.pos < 0 or p.pos >= BOARD_SIZE: return false
+	if candidate.phase not in ["roll", "march_deposit", "lot", "manage", "combat", "cards", "finished"]: return false
 	s = candidate
 	rng.state = data.rng_state
 	return true

@@ -29,7 +29,7 @@ func screenshot(filename: String) -> Image:
 	await process_frame
 	await process_frame
 	var img = root.get_texture().get_image()
-	img.save_png("res://../" + filename)
+	img.save_png("res://" + filename)
 	return img
 
 func run() -> void:
@@ -43,10 +43,12 @@ func run() -> void:
 	app.game.new_game(4, 42)
 	app.game.s.turn = 0
 	app.refresh()
-	await screenshot("MitteFehde-board.png")
+	app.board.layout_board()
+	verify(app.board.boxes.size() == 34, "34 outer hitboxes, no inner hitboxes")
+	verify(ProjectSettings.get_setting("application/config/name") == "Mitt Fued", "New game title")
+	await screenshot("MittFued-board.png")
 	click("Roll & march")
-	while app.game.s.phase == "route": click("Follow the outer road")
-	app.game.player().pos = 34
+	app.game.player().pos = 3
 	app.game.arrive()
 	app.refresh()
 	click("Buy lot")
@@ -69,10 +71,10 @@ func run() -> void:
 	verify(app.game.s.battle_dice[0].size() == 3 and app.game.s.battle_dice[1].size() == 3, "UI battle rolls three dice on each side")
 	app.board.animate(app.game.s.event, 1.8)
 	app.board.animation_left = 1.2
-	var frame1 = await screenshot("MitteFehde-battle.png")
+	var frame1 = await screenshot("MittFued-battle.png")
 	app.board.animation_left = 0.4
 	app.board.queue_redraw()
-	var frame2 = await screenshot("MitteFehde-battle-motion.png")
+	var frame2 = await screenshot("MittFued-battle-motion.png")
 	verify(frame1.get_data() != frame2.get_data(), "Battle figures actually animate across frames")
 	click("Retreat")
 	app.save_path = "res://ui-save.tmp"
@@ -85,7 +87,7 @@ func run() -> void:
 	app.paused = false
 	app.refresh()
 	click("Roll & march")
-	verify(app.animation_left > 0 and app.board.event.kind == "dice", "Roll starts central dice animation")
+	verify(app.animation_left > 0 and app.board.event.kind == "dice", "Roll starts dice animation")
 	var phase: String = app.game.s.phase
 	app.act(app.game.pass_lot)
 	verify(app.game.s.phase == phase, "Actions are gated during animation")
@@ -99,15 +101,15 @@ func run() -> void:
 	await create_timer(0.15).timeout
 	verify(app.animation_left == frozen, "Pause freezes animation timing")
 	app.paused = false
-	await screenshot("MitteFehde-dice.png")
+	await screenshot("MittFued-dice.png")
 	await create_timer(1.5).timeout
 	verify(app.animation_left == 0, "Animation finishes and releases controls")
 	app.game.player().pos = 1
 	app.game.arrive()
 	app.refresh()
 	click("Buy lot")
-	verify(app.board.event.kind == "lot", "Purchase starts central building animation")
-	await screenshot("MitteFehde-building.png")
+	verify(app.board.event.kind == "lot", "Purchase starts building animation")
+	await screenshot("MittFued-building.png")
 	app.show_rules()
 	await process_frame
 	for c in app.get_children():
